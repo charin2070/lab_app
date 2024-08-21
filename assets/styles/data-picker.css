@@ -1,0 +1,83 @@
+
+#datepicker {
+  display: block;
+}
+
+#datepicker-input:focus + #datepicker {
+  display: block;
+}
+
+#datepicker-input-date- {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #d1d1d1;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+#datepicker {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #d1d1d1;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: none;
+}
+
+#datepicker table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#datepicker th,
+#datepicker td {
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+#datepicker th {
+  background-color: #f0f0f0;
+  font-weight: normal;
+}
+
+#datepicker td {
+  font-size: 14px;
+}
+
+#datepicker td:hover {
+  background-color: #e5e5e5;
+  border-radius: 50%;
+}
+
+#datepicker .selected {
+  background-color: #007aff;
+  color: #ffffff;
+  border-radius: 50%;
+}
+
+#datepicker .month-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+#datepicker .month-navigation button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #007aff;
+}
+
+#datepicker .month-navigation span {
+  font-size: 14px;
+  font-weight: bold;
+}

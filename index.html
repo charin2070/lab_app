@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab App</title>
+
+    <!-- Стили -->
+    <link rel="stylesheet" href="./assets/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/styles/style.css">
+    <link rel="stylesheet" href="./assets/styles/data-picker.css">
+
+    <!-- FAVICON -->
+    <link rel="icon" href="./assets/images/coding.svg">
+
+
+    <!-- Скрипты -->
+    <script defer src="./assets/data/file-string.js"></script>
+    <script defer src="./assets/scripts/bootstrap.bundle.min.js"></script>
+    <script defer src="./assets/scripts/tg-api.js"></script>
+    <script defer src="./assets/scripts/table-component.js"></script>
+    <script defer src="./assets/scripts/multi-tool.js"></script>
+    <script defer src="./assets/scripts/fs-less.js"></script>
+    <script defer src="./assets/scripts/crypto-bro.js"></script>
+    <script defer src="./assets/scripts/check-app.js"></script>
+    <script defer src="./assets/scripts/app.js"></script>
+</head>
+<!-- BODY -->
+
+<body class="ide">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <div class="container-fluid">
+
+            <!-- FILE INPUT-->
+            <input type="file" id="fileInput" accept=".*" style="display: none;">
+
+            <div class="header-group">
+                <!-- DROPDOWN FUNCTIONS-->
+                <span style="font-family: monospace; font-size: 1.2em;">
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle btn-dark fw-semibold border-0 shadow-sm" type="button"
+                            id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span style="color:#358ccb; font-size: 1.2em;">Functions</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu border-0 shadow-lg"
+                            aria-labelledby="dropdownMenuButton3">
+
+                            <!-- FUNCTIONS LIST -->
+                            <li><a id="btnFileToString" class="dropdown-item">📩 fileToBinaryString /
+                                    stringToBinaryFile</a></li>
+                            <li><a id="btnStringToFile" class="dropdown-item">📤 stringToFile</a></li>
+
+                            <!-- SEPARATOR -->
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a id="btnSendMessageToBot" class="dropdown-item">SendMessageToBot</a></li>
+                            <li><a id="btnGetConsoleEvents" class="dropdown-item">GetConsoleEvents</a></li>
+                        </ul>
+
+                    </div>
+                </span>
+
+
+                <!-- NAVBAR -->
+                <a class="navbar-brand" href="#"></a>
+                <button type="button" id="btnAction" class="btn btn-dark shadow-sm"
+                    style="font-size: 1.2em; font-family: monospace ; z-index: 10;">
+
+                    <!-- ACTION BUTTON -->
+                    <!-- <span class="ide ide-keyword">function</span> -->
+                    <span class="ide ide-function-name">Экшон</span>
+                    <span class="ide ide-round-brackets">()</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <content id="contentBox" style="margin: 0; padding: 0;">
+
+    </content>
+</body>
+
+</html>
