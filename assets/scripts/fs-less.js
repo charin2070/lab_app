@@ -1,5 +1,9 @@
 // Функции для работы с файлами
 
+// URL веб-приложения Google Apps Script, который принимает POST-запрос
+const url =
+  "https://script.google.com/macros/s/AKfycbxw0vyjd2SKCMl-Yt5lq1NVSFJRMEfOOHhHnpitq3IPY2LvY3zV4kyGx7dB2rhJXJyM/exec";
+
 // Генерирует бинарную строку из файла file
 function fileToBinaryString(file) {
   return new Promise((resolve, reject) => {
@@ -89,77 +93,36 @@ function loadBinaryFile(file) {
   });
 }
 
-// Тест fileToBinaryString, binaryStringToFile
-async function selfTestFileToString() {
-  // Шаг 1: Создаем элемент input для выбора исходного файла
-  const input = document.createElement("input");
-  input.type = "file";
+pickFile().then((file) => {
+  if (file) {
+    console.log("Выбранный файл:", file.name);
+    // Вы можете здесь работать с файлом, например, читать его содержимое
+  } else {
+    console.log("Файл не был выбран.");
+  }
+});
 
-  input.onchange = async (event) => {
-    const file = event.target.files[0];
-    log(file, "File for convertion to binary string");
-
-    if (file) {
-      try {
-        // Шаг 2: Конвертируем файл в бинарную строку и сохраняем её
-        const binaryString = await fileToBinaryString(file);
-        binaryStringToFile(binaryString, file.type);
-
-        log(
-          "Файл сохранён как текстовая строка. Теперь выберите сохранённый файл для восстановления.",
-          "[binaryStringToFile]"
-        );
-
-        // Шаг 3: Создаем элемент input для выбора сохраненного текстового файла
-        const loadedFileInput = document.createElement("input");
-        loadedFileInput.type = "file";
-
-        loadedFileInput.onchange = async (loadEvent) => {
-          const savedFile = loadEvent.target.files[0];
-
-          if (savedFile) {
-            // Шаг 4: Загружаем строку из файла и преобразуем её обратно в Blob
-            const loadedBlob = await loadBinaryFile(savedFile);
-            const loadedString = new TextDecoder().decode(loadedBlob);
-            console.log("Строка из загруженного файла:", loadedString);
-            loadedFileInput.value = null;
-            input.value = null;
-            loadedFileInput.removeEventListener(
-              "change",
-              loadEvent.target.onchange
-            );
-            input.removeEventListener("change", event.target.onchange);
-            loadedFileInput.remove();
-            input.remove();
-            loadedBlob.close();
-            loadedString.close();
-            window.URL.revokeObjectURL(loadedBlob.url);
-          } else {
-            console.info("Не удалось загрузить файл");
-          }
-          loadedFileInput.value = null;
-          input.value = null;
-        };
-        loadedFileInput.accept = ".txt";
-      } catch (e) {
-        console.log(e);
-      }
-    }
+function sendPostRequest() {
+  const data = {
+    key: "APIKEY",
+    fileUrl: "https://example.com/file.exe",
+    folderId: "1UzY7AUy0AMoAuddJZO7U4D7osL2W3bEz"
   };
 
-  input.click();
-}
+  const url = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec";
 
-// Returns file from created open file dialog
-function selectFile() {
-  return new Promise((resolve, reject) => {
-    const input = document.createElement("input");
-    input.type = "file";
-
-    input.onchange = async (event) => {
-      const file = event.target.files[0];
-      log(file, "File for convertion to binary string");
-      return resolve(file), reject("FUCK");
-    };
-  });
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data),
+    mode: "no-cors"
+  })
+    .then(() => {
+      console.log("Request sent successfully");
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }

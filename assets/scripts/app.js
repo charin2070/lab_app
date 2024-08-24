@@ -9,6 +9,15 @@ function logToTable(key, value) {
   elements["tableResult"].addRow([key, value]);
 }
 
+// Возвращает ответ запускаемой функции
+function getTest(func, params) {
+  // Логируем в консоль название функции
+  console.log(`Запуск функции: ${func.name}`);
+
+  // Вызовем переданную функцию func с использованием оператора spread для массива params
+  return func(...params);
+}
+
 // Entry
 let elements = {
   contentBox: document.getElementById("content-box"),
@@ -19,7 +28,8 @@ let elements = {
   fileInput: document.getElementById("fileInput"),
   btnFileToString: document.getElementById("btnFileToString"),
   btnGetConsoleEvents: document.getElementById("btnGetConsoleEvents"),
-  btnStringToFile: document.getElementById("btnStringToFile")
+  btnStringToFile: document.getElementById("btnStringToFile"),
+  btnCsvToObjects: document.getElementById("btnCsvToObjects")
 };
 
 function initComponents() {
@@ -35,7 +45,43 @@ function initComponents() {
   );
 
   elements.tableResult = tableResults;
-  setEventListeners();
+  setEventListenersById();
+  // setEventListeners();
+}
+
+function btnCsvToObjects() {
+  // Select file via filePicker dialog
+  selectFile().then = (fi) => {
+    csvToObjects(fi);
+  };
+
+  csvToObjects(fi);
+}
+
+function setEventListenersById() {
+  // 1. Находим все элементы на странице
+  const allElements = document.querySelectorAll("*");
+
+  // 2. Проходим по всем элементам
+  allElements.forEach((element) => {
+    // Проверяем, есть ли у элемента id
+    const id = element.id;
+    if (id && id.startsWith("btn")) {
+      // 3. Если id начинается с "btn", назначаем обработчик события
+      element.onclick = function () {
+        // Используем значение id как имя функции
+        if (typeof window[id] === "function") {
+          window[id]();
+        } else {
+          console.warn(`Функция с именем "${id}" не определена.`);
+        }
+      };
+    }
+  });
+}
+
+function btnAction() {
+  csvFileCreateTest();
 }
 
 // Find elements by key name and assign elements
@@ -53,12 +99,6 @@ function setEventListeners() {
   };
 
   elements["btnSendMessageToBot"].onclick = checkSendToTelegram;
-
-  elements["btnAction"].onclick = () => {
-    checkSendToTelegram;
-    // Your code here
-    //...
-  };
 }
 
 function startApp() {

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets SQL Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #query-form {
+            margin-bottom: 20px;
+        }
+
+        #results {
+            white-space: pre-wrap;
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Google Sheets SQL Client</h1>
+    <form id="query-form">
+        <label for="query">SQL Query:</label><br>
+        <input type="text" id="query" name="query" value="SELECT * WHERE A = 'Команда устр проблему'"
+            style="width: 100%; padding: 8px;">
+        <button type="submit" style="margin-top: 10px;">Execute Query</button>
+    </form>
+
+    <h2>Results:</h2>
+    <div id="results"></div>
+
+    <script>
+        const webAppTable =
+            'AKfycbxvRGmURYNkSCLbuhge4G9kfhuHvbhQbngxPlbOxssKdJQAKxcnQZbAcoS6C2YyHGqrpA';
+
+        document.getElementById('query-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Предотвращаем отправку формы
+
+            const query = document.getElementById('query').value;
+            const scriptUrl = `https://script.google.com/macros/s/${webAppTable}/exec`; // Замените на ваш URL
+            const url = `${scriptUrl}?query=${encodeURIComponent(query)}`;
+
+
+
+            fetch(url, { redirect: 'follow' }) // Попробуйте включить поддержку перенаправлений
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    console.log(`Response Text: ${text}`);
+                    // Дальнейшая обработка...
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    document.getElementById('results').textContent = `Error: ${error.message}`;
+                });
+
+        });
+    </script>
+
+</body>
+
+</html>

@@ -102,3 +102,36 @@ async function loadFromCsvFile(csvFile) {
     reader.readAsText(csvFile);
   });
 }
+
+/**
+ * Преобразует строку CSV в массив объектов с указанными колонками.
+ *
+ * @param {string} csvString - Строка CSV, содержащая данные.
+ * @param {Array} selectedColumns - Массив названий колонок, которые нужно включить в объекты.
+ * @returns {Array} Массив объектов, где каждый объект представляет собой строку данных.
+ */
+function csvToObjects(csvString, selectedColumns) {
+  // Разделяем CSV строку на строки по переводу строки
+  const rows = csvString.trim().split("\n");
+
+  // Получаем заголовки колонок из первой строки
+  const headers = rows[0].split(",");
+
+  // Функция для создания объекта из строки данных
+  function createObject(row) {
+    const values = row.split(",");
+    const obj = {};
+
+    selectedColumns.forEach((column) => {
+      const index = headers.indexOf(column);
+      if (index !== -1) {
+        obj[column] = values[index];
+      }
+    });
+
+    return obj;
+  }
+
+  // Пропускаем первую строку (заголовки) и преобразуем оставшиеся строки в объекты
+  return rows.slice(1).map(createObject);
+}
